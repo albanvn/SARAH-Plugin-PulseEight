@@ -1,0 +1,10 @@
+{
+  "modules" : { 
+    "PulseEight"  : {
+      "description": "",
+      "version": "1.0",
+	  "cecclient_path": "",
+	  "cecport": ""
+    }
+  }
+}

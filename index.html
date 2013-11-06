@@ -1,0 +1,58 @@
+<div id="PulseEight">  
+	<div class="span11">
+	Ce plugin permet de controler un device <b>PulseEight USB-CEC Adapter</b>.<BR><BR>
+	<b>Vous devez posseder un device PulseEight USB-CEC Adapter (<a href="http://www.pulse-eight.com/store">www.Pulse-Eight.com</a>) pour que ce plugin fonctionne et avoir installé sous windows ou sous linux les applicatifs du produit (notamment l'applicatif cec-client.exe pour windows ou cec-client pour linux).</b><BR><BR>
+	Merci de vérifier avant toute chose que ces applicatifs PulseEight fonctionnent correctement sur votre machine avec vos équipements avant de passer à l'intégration du device au sein de SARAH via ce plugin.<BR><BR>
+	<i>Rappel: Ce plugin permet de piloter, par l'intermediaire d'un cable HDMI et du device PulseEight USB-CEC Adapter, une grappe de peripheriques connectés en HDMI à votre machine (sous réserve que vos équipements soit compatible HDMI-CEC)</i><BR><BR>
+	<b>Pour que le plugin fonctionne vous devez au préalable configurer celui-ci sur le portail de SARAH.</b><BR><BR>
+	<H4>Configuration</H4>
+	Les deux champs à renseigner sont:<BR><BR>
+	<b>cecclient_path</b>: chemin complet pour acceder à l'outils cec-client.exe (windows) ou cec-client (linux). Le chemin doit être absolue et doit contenir le nom de l'outils (Par défaut: C:\Program File\Pulse-Eight\USB-CEC Adapter\cec-client.exe sous windows)<BR><BR>
+	<b>cecport</b>: le port du pulse eight (COM{X} sous windows, /dev/ttyACM{X} sous linux). Ce champ est optionnel si vous n'avez qu'un seul PulseEight USB-CEC Adapter.<BR><BR>
+	Une fois ces paramètres fixés, le plugin est opérationnelle.<BR><BR>
+	<H4>Phrases reconnues par SARAH</H4>
+	<i>Les phrases que SARAH reconnait pour le moment sont:<BR><BR>
+	<ul>
+	<li>allume la télévision</li>
+	<li>éteints la télévision</li>
+	<li>mets la source 1</li>
+	<li>mets la source 2</li>
+	<li>mets la source 3</li>
+	</ul></i>
+	<BR>
+	Ouvrez le fichier PulsEight.xml pour comprendre le fonctionnement du plugin et ajouter des phrases et/ou des commandes reconnaissables par SARAH.<BR><BR>
+	<H4>Fonctionnement et enrichissement</H4><BR>
+	Dans le répertoire du plugin vous constaterez qu'il y a un fichier nommé Command.txt<BR><BR>
+	Ce fichier contient la liste des message HDMI-CEC permettant de piloter vos équipements.<BR>
+    Pour le moment ce fichier contient peu de commande (tvon/tvstandby/tvsource{X}) et s'enrichira au fur et à mesure des utilisations possibles.<BR><BR>
+	<H5>Syntaxe du fichier Command.txt</H5>
+	Il est composé de lignes, elles même composées de duples key/value de la forme: <code>key=value</code>.<BR><BR>
+	Ainsi:<BR>
+	<ul>
+	<li>key est une chaine de caractères representant une commande (plus pratique à retenir et à manipuler que de l'hexadécimal),</li>
+	<li>value est une séquence hexadécimale de type "XX:XX:XX:..." contenant le message HDMI-CEC (voir le site <a href="http://www.cec-o-matic.com/">www.cec-o-matic.com</a> pour une liste exhaustive des messages HDMI-CEC) à envoyer.</li><BR>
+	</ul>
+	<b>Dans l'interêt commun, pensez à me communiquer vos ajouts de commandes (via mail par exmple, albanvn@gmail.com) de manière à faire profiter de vos améliorations et ajouts la communauté .</b><BR>
+	<BR>
+	Si vous ajoutez des lignes de duples à ce fichier, pensez à redémarrer SARAH (notamment le NodeJS) pour que les nouvelles commandes soient prise en compte.<BR>
+	<BR>
+	<H4>Appel depuis une requète HTTP</H4>
+	En utilisant une requète HTTP, on peut demander au plugin PulseEight d'envoyer une commande HDMI-CEC<BR><BR>
+	Voici l'URL:<BR>
+	<code>http://{IP DE SARAH}/Sarah/PulseEight?cmd={string}</code><BR><BR>
+	<b>{string}</b> peut être une commande enregistrée dans le fichier Command.txt ({string} étant la key) ou directement une commande hexadécimale brute "XX:XX:..."<BR>
+	<b>{string}</b> peut aussi être une séquence de commandes (enregistrée dans Command.txt ou en hexadécimale brute) séparée par ",".<BR><BR>
+	Ainsi <code>cmd=tvon,,,tvsource1</code>, allumera la télévision, attendra 4 secondes (2 champs vides = 2 pauses de 2 secondes) puis mettra la télévision sur la source 1<BR><BR>
+	Dans l'URL on peut également ajouter un argument optionnel "silent" qui permet d'éviter (si fixé à 1) que SARAH vocalise l'execution de la commande (utilie pour envoyer une commande en mode silencieux lors de l'execution d'un scénario par exemple).<BR><BR>
+	Ainsi l'URL: <BR>
+	<code>http://{IP DE SARAH}/Sarah/PulseEight?cmd=tvon,tvsource1&silent=1</code><BR><BR>
+	permettra d'allumer la télévision puis mettra la source1 sans que SARAH vocalise la confirmation de l'action.<BR><BR>
+	<H4>Appel depuis un plugin</H4>
+	Vous pouvez aussi appeler le plugin PulseEight directement depuis un autre plugin en javascript via la commande:<BR>
+	<BR>  
+	<code>SARAH.run("PulseEight", { "cmd" : "tvon,tvsource1" , "silent" : 1 });</code><BR>
+	<BR><BR><BR>
+	Voila j'espère que le plugin vous plaira et qu'il vous donnera satisfaction.<BR>
+	Vous pouvez me contacter pour me faire part de vos commentaires où des améliorations que vous aimeriez voir.(alban@albanvn.net)<BR>
+	</div> 
+</div>

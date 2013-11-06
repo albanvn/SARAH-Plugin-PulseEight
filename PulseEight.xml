@@ -1,0 +1,24 @@
+﻿<grammar version="1.0" xml:lang="fr-FR" mode="voice" root="rulePulseEight" xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0">
+  <rule id="rulePulseEight" scope="public">
+    <example>Sarah Mets la source 1 ?</example>
+    <tag>out.action=new Object();</tag>
+    <item>Sarah</item>
+    <one-of>
+      <item>allume la télévision<tag>out.action.cmd="tvon";</tag></item>
+      <item>éteints la télévision<tag>out.action.cmd="tvstdby";</tag></item>
+      <item>met la source 1<tag>out.action.cmd="tvsource1";</tag></item>
+      <item>met la source 2<tag>out.action.cmd="tvsource2";</tag></item>
+      <item>met la source 3<tag>out.action.cmd="tvsource3";</tag></item>
+    </one-of>
+    <item repeat="0-1">
+      <one-of>
+        <item>s'il te plait</item>
+        <item>si il te plait</item>
+        <item>se te plait</item>
+      </one-of>
+    </item>
+    <tag>out.action._attributes.uri="http://127.0.0.1:8080/sarah/PulseEight";</tag>
+  </rule> 
+<!-- Automatic Generation § -->
+<!-- § Automatic Generation -->
+</grammar>

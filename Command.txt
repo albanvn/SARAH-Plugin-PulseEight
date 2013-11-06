@@ -1,0 +1,5 @@
+tvon=10:04
+tvstdby=10:36
+tvsource1=1f:82:10:00
+tvsource2=1f:82:20:00
+tvsource3=1f:82:30:00
