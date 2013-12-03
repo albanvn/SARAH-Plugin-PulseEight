@@ -51,6 +51,35 @@ exports.action = function(data, callback, config, SARAH)
 
 function execute(listcmd, i, config, SARAH)
 {
+    var exec = require('child_process').exec;
+    var process = "";
+    if (i<listcmd.length)
+    {
+        if (listcmd[i]=="")
+        {
+            //console.log("pause");
+            setTimeout(function(){execute(listcmd, ++i, config, SARAH);}, gs_timeout);
+        }
+        else
+        {
+            //console.log(listcmd[i]);
+            if (listcmd[i] in g_listcmd){
+                //SARAH.remote({ 'run' : g_cmd, 'runp' : g_listcmd[listcmd[i]] + " \"" + config.cecclient_path + "\" " + config.cecport});
+                process = g_cmd+' '+g_listcmd[listcmd[i]] + " \"" + config.cecclient_path + "\" " + config.cecport+'';
+            }else{
+                //SARAH.remote({ 'run' : g_cmd, 'runp' : listcmd[i] + " \"" + config.cecclient_path + "\" " + config.cecport});
+                process = g_cmd+' '+listcmd[i] + " \"" + config.cecclient_path + "\" " + config.cecport+'';
+            }
+            console.log("process="+process);
+            var child = exec(process, function (error, stdout, stderr) {
+                if (error !== null) console.log('exec error: ' + error);
+            });
+            setTimeout(function(){execute(listcmd, ++i, config, SARAH);}, gs_timeout);
+        }
+    }
+}
+function executeOnScreen(listcmd, i, config, SARAH)
+{
   if (i<listcmd.length)
   {
     if (listcmd[i]=="")
